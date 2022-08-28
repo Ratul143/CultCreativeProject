@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "961592060182",
+    "project_id": "cultcreativeproject",
+    "storage_bucket": "cultcreativeproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961592060182:android:42b6cc1cf19377d8a1c837",
+        "android_client_info": {
+          "package_name": "com.cultcreativeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961592060182-99vp0ajc8f4g74jlk2ecqt8gscm88mlf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNz5qN5f-8817jRygt1jyn_shlJjnsusg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961592060182-99vp0ajc8f4g74jlk2ecqt8gscm88mlf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
