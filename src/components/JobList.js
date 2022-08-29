@@ -41,7 +41,7 @@ const JobList = ({item, index}) => {
                 marginHorizontal: 5,
               }}></View>
             <Text style={{color: 'gray'}} numberOfLines={1}>
-              {item?.noOfApplicants}
+              {item?.noOfApplicants} applicants
             </Text>
           </View>
         </View>
