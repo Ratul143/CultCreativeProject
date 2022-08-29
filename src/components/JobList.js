@@ -2,9 +2,10 @@ import {View, Text, Image, Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import ProgressiveImage from './ProgressiveImage';
 import {windowWidth} from '../utils/Dimentions';
+import moment from 'moment';
 
 const JobList = ({item, index}) => {
-  //   console.log(item);
+  console.log(item);
   return (
     <View style={styles.card}>
       <View style={{flexDirection: 'row', flex: 1}}>
@@ -39,9 +40,22 @@ const JobList = ({item, index}) => {
                 borderWidth: 0.5,
                 borderColor: 'black',
                 marginHorizontal: 5,
-              }}></View>
+              }}
+            />
             <Text style={{color: 'gray'}} numberOfLines={1}>
               {item?.noOfApplicants} applicants
+            </Text>
+            <View
+              style={{
+                // width: 2,
+                height: 14,
+                borderWidth: 0.5,
+                borderColor: 'black',
+                marginHorizontal: 5,
+              }}
+            />
+            <Text style={{color: '#242323'}} numberOfLines={1}>
+              {moment(item.createdAt.toDate()).fromNow()}
             </Text>
           </View>
         </View>
