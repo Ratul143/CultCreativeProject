@@ -1,19 +1,14 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import JobList from '../components/JobList';
 import Shimmer from '../components/shimmer';
+import JobTypes from '../components/JobTypes';
 
 const JobScreen = () => {
   const [posts, setPosts] = useState({status: 'apiCalling'});
   const [number, setNumber] = useState(1);
+  const [filterData, setFilterData] = useState({status: false, data: []});
   const [load, setLoad] = useState(false);
 
   const fetchPosts = async () => {
@@ -52,28 +47,45 @@ const JobScreen = () => {
     fetchPosts();
   }, [number]);
 
+  const dupicate = () => {
+    let result = {};
+    posts?.map(item => {
+      if (result[item?.jobPriority] === undefined) {
+        result[`${item?.jobPriority}`] = 1;
+      }
+    });
+
+    let final = Object.keys(result);
+
+    return final;
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,.01)'}}>
       {posts?.status === 'apiCalling' ? (
         <Shimmer />
       ) : (
-        <FlatList
-          data={posts}
-          renderItem={renderItem}
-          onEndReached={() => setNumber(number + 1)}
-          ListFooterComponent={() => {
-            if (load && posts?.length !== 10) {
-              return (
-                <ActivityIndicator
-                  size="small"
-                  color={'green'}
-                  style={{marginBottom: 10}}
-                />
-              );
-            }
-          }}
-          keyExtractor={(item, index) => index}
-        />
+        <>
+          <View style={styles.typesContainer}>
+            {dupicate(posts)?.map((item, index) => (
+              <JobTypes
+                key={index}
+                item={item}
+                filterData={filterData}
+                setFilterData={setFilterData}
+                posts={posts}
+              />
+            ))}
+          </View>
+
+          <FlatList
+            data={filterData?.status ? filterData.data : posts}
+            style={{flex: 1}}
+            renderItem={renderItem}
+            onEndReached={() => setNumber(number + 1)}
+            keyExtractor={(item, index) => index}
+          />
+        </>
       )}
     </View>
   );
@@ -81,4 +93,10 @@ const JobScreen = () => {
 
 export default JobScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  typesContainer: {
+    flexDirection: 'row',
+    paddingTop: 5,
+    marginLeft: 5,
+  },
+});

@@ -1,13 +1,37 @@
-import {View, Text, Image, Platform, StyleSheet} from 'react-native';
+import {View, Text, Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import ProgressiveImage from './ProgressiveImage';
 import {windowWidth} from '../utils/Dimentions';
 import moment from 'moment';
+import LinearGradient from 'react-native-linear-gradient';
+import {Colors} from '../constants/styles';
 
 const JobList = ({item, index}) => {
-  console.log(item);
+  // console.log(item);
   return (
     <View style={styles.card}>
+      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+        <LinearGradient
+          style={[
+            {
+              borderRadius: 10,
+              right: 5,
+            },
+          ]}
+          colors={[Colors.newRed, Colors.onlyRed]}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}>
+          <Text
+            style={{
+              color: Colors.primary,
+              fontSize: 12,
+              paddingBottom: 2,
+              paddingHorizontal: 10,
+            }}>
+            {item?.jobPriority}
+          </Text>
+        </LinearGradient>
+      </View>
       <View style={{flexDirection: 'row', flex: 1}}>
         <ProgressiveImage
           defaultImageSource={require('../assets/images/default-img.jpg')}
@@ -15,45 +39,25 @@ const JobList = ({item, index}) => {
           style={{width: 50, height: 50, borderRadius: 100}}
           resizeMode="cover"
         />
-        <View
-          style={{
-            marginLeft: 15,
-            width: windowWidth - (24 / 375) * windowWidth - 30 - 50,
-          }}>
+        <View style={styles.cardContent}>
           <Text numberOfLines={1} style={styles.title}>
             {item?.title}
           </Text>
-          <Text style={{color: 'blue', marginTop: 5}} numberOfLines={1}>
+          <Text style={{color: Colors.green, marginTop: 5}} numberOfLines={1}>
             {item?.companyName}
           </Text>
-          <Text style={{color: 'gray'}} numberOfLines={1}>
+          <Text style={styles.textColor} numberOfLines={1}>
             {item?.companyLocation}
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{color: 'gray'}} numberOfLines={1}>
+            <Text style={styles.textColor} numberOfLines={1}>
               {item?.jobType}
             </Text>
-            <View
-              style={{
-                // width: 2,
-                height: 14,
-                borderWidth: 0.5,
-                borderColor: 'black',
-                marginHorizontal: 5,
-              }}
-            />
-            <Text style={{color: 'gray'}} numberOfLines={1}>
+            <View style={styles.textStyle} />
+            <Text style={styles.textColor} numberOfLines={1}>
               {item?.noOfApplicants} applicants
             </Text>
-            <View
-              style={{
-                // width: 2,
-                height: 14,
-                borderWidth: 0.5,
-                borderColor: 'black',
-                marginHorizontal: 5,
-              }}
-            />
+            <View style={styles.textStyle} />
             <Text style={{color: '#242323'}} numberOfLines={1}>
               {moment(item.createdAt.toDate()).fromNow()}
             </Text>
@@ -85,11 +89,23 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  cardContent: {
+    marginLeft: 15,
+    width: windowWidth - (24 / 375) * windowWidth - 30 - 50,
+  },
   title: {
     fontSize: 15,
     fontWeight: 'bold',
     color: 'black',
-
     width: windowWidth - (24 / 375) * windowWidth - 30 - 50,
+  },
+  textStyle: {
+    height: 14,
+    borderWidth: 0.5,
+    borderColor: 'black',
+    marginHorizontal: 5,
+  },
+  textColor: {
+    color: Colors.justGrey,
   },
 });
